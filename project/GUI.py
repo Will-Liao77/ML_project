@@ -1,3 +1,4 @@
+import random
 import tkinter as tk
 from PIL import Image, ImageTk
 import tkinter.filedialog as fd
@@ -81,6 +82,59 @@ image_main.grid(column=0, row=0, sticky=align_mode)
 image_main.pack(side="bottom", fill="both", expand="yes")
 load_model_test.model()
 
+count = 0
+
+lbl_question = tk.Label(div3, text='Question:', bg='orange',
+                        fg='white', font=('microsoft yahei', 15))
+lbl_question.grid(column=0, row=0, sticky=align_mode)
+
+lbl_question_text = tk.Label(div3, text='test123', bg='orange',
+                             fg='white', font=('microsoft yahei', 15))
+lbl_question_text.grid(column=1, row=0, sticky=align_mode)
+
+lbl_title1 = tk.Label(div3, text='text', bg='orange',
+                      fg='white', font=('microsoft yahei', 15))
+lbl_title1.grid(column=1, row=2, sticky=align_mode)
+
+lbl_count = tk.Label(div3, text=count, bg='orange',
+                     fg='white', font=('microsoft yahei', 20))
+lbl_count.grid(column=0, row=2, sticky=align_mode)
+
+mylabel = tk.Label(div3, text='Answer:', bg='orange',
+                   fg='white', font=('microsoft yahei', 15))
+mylabel.grid(column=0, row=1, sticky=align_mode)
+
+myentry = tk.Entry(div3)
+myentry.grid(column=1, row=1, padx=5, pady=10, ipady=3, sticky=align_mode)
+
+
+def change_question():
+    f = open('D:/CODE/python/log.txt', 'r')
+    pre_sol = f.read()
+    lst = []
+    pre_hidden = 1
+    for i in pre_sol:
+        lst.append(i)
+    if len(lst) <= 3:
+        hidden = random.randint(1, len(lst))
+        lst.remove(lst[hidden])
+        lst.insert(hidden, "_")
+        Lis_to_Str = "".join(lst)
+        lst.clear()
+        lbl_question_text.config(text=Lis_to_Str)
+    else:
+        hidden = random.randint(pre_hidden + 1, len(lst)-1)
+        lst.remove(lst[hidden])
+        lst.remove(lst[pre_hidden])
+        lst.insert(hidden, "_")
+        lst.insert(pre_hidden, "_")
+        Lis_to_Str = "".join(lst)
+        lst.clear()
+        lbl_question_text.config(text=Lis_to_Str)
+
+
+change_question()
+
 
 def callback():
     load_pic()
@@ -90,21 +144,12 @@ def callback():
     image_main.configure(image=img2)
     image_main.image = img2
     load_model_test.model()
-
-
-lbl_title1 = tk.Label(div3, text='text', bg='orange',
-                      fg='white', font=('microsoft yahei', 20))
-lbl_title1.grid(column=1, row=1, sticky=align_mode)
-
-mylabel = tk.Label(div3, text='Answer:', bg='orange',
-                   fg='white', font=('microsoft yahei', 15))
-mylabel.grid(column=0, row=0, sticky=align_mode)
-
-myentry = tk.Entry(div3)
-myentry.grid(column=1, row=0, padx=5, pady=10, ipady=3, sticky=align_mode)
+    change_question()
+    myentry.delete('0', 'end')
 
 
 def btn_show_pre():
+    global count
     if myentry.get() != '':
         f = open('D:/CODE/python/log.txt', 'r')
         pre_sol = f.read()
@@ -117,6 +162,8 @@ def btn_show_pre():
         # print(myentry_ans)
         if pre_sol == myentry_ans:
             lbl_title1.config(text='Correct')
+            count = count + 1
+            lbl_count.config(text=count)
         else:
             lbl_title1.config(text='Error! answer is {}'.format(pre_sol))
     '''f = open('D:/CODE/python/log.txt', 'r')
@@ -125,20 +172,29 @@ def btn_show_pre():
     # return f.read()'''
 
 
+def restart():
+    global count
+    count = 0
+    lbl_count.config(text=count)
+
+
 #bt1 = tk.Button(div2, text='選擇圖片', bg='green', fg='white')
 bt1 = tk.Button(div2, text='change photo', bg='green',
                 fg='white', font=('microsoft yahei', 15))
 bt2 = tk.Button(div2, text='submit', bg='green',
                 fg='white', font=('microsoft yahei', 15))
-#bt3 = tk.Button(div3, text='submit', command=button_event)
+bt3 = tk.Button(div2, text='restart', bg='green',
+                fg='white', font=('microsoft yahei', 15))
+#bt3 = tk.Button(div3, text='restart', command=button_event)
 #bt3.configure(font=('microsoft yahei', 10))
 
 bt1.grid(column=0, row=0, sticky=align_mode)
-bt2.grid(column=0, row=1, sticky=align_mode)
-#bt3.grid(column=2, row=0, sticky=align_mode)
+bt2.grid(column=1, row=0, sticky=align_mode)
+bt3.grid(column=2, row=0, sticky=align_mode)
 
 bt1['command'] = callback
 bt2['command'] = btn_show_pre
+bt3['command'] = restart
 
 layout(window, cols=2, rows=2)
 layout(div1)

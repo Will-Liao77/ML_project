@@ -29,8 +29,8 @@ def model():
     import sys
     sys.path.append('D:/CODE/python/project/GUI.py')
 
-    model = load_model('D:/keras_envirment/animal_init_graph_model_success.h5')
-
+    #model = load_model('D:/keras_envirment/animal_init_graph_model_success.h5')
+    model = load_model('D:/keras_envirment/cls33ac8629v2.h5')
     # In[2]:
 
     # model.summary()
@@ -39,8 +39,14 @@ def model():
 
     # In[4]:
 
+    '''translate = {"cane": "Dog", "cavallo": "Horse", "elefante": "Elephant", "farfalla": "Butterfly", "gallina": "Chicken",
+                 "gatto": "Cat", "mucca": "Cow", "pecora": "Sheep", "scoiattolo": "Squirrel", "ragno": "Spider"}'''
+
     translate = {"cane": "Dog", "cavallo": "Horse", "elefante": "Elephant", "farfalla": "Butterfly", "gallina": "Chicken",
-                 "gatto": "Cat", "mucca": "Cow", "pecora": "Sheep", "scoiattolo": "Squirrel", "ragno": "Spider"}
+                 "gatto": "Cat", "mucca": "Cow", "pecora": "Sheep", "scoiattolo": "Squirrel", "ragno": "Spider", "buffalo": "buffalo",
+                 "rhino": "rhino", "zebra": "zebra", "Crab": "Crab", "Deer": "Deer", "Eagle": "Eagle", "Fox": "Fox", "Frog": "Frog", "Giraffe": "Giraffe",
+                 "Jellyfish": "Jellyfish", "Lion": "Lion", "Lizard": "Lizard", "Monkey": "Monkey", "Owl": "Owl", "Parrot": "Parrot", "Penguin": "Penguin",
+                 "Pig": "Pig", "Polar bear": "Polar bear", "Rabbit": "Rabbit", "Sea lion": "Sea lion", "Sea turtle": "Sea turtle", "Shark": "Shark", "Tiger": "Tiger", "Whale": "Whale"}
 
     # In[6]:
 
@@ -52,7 +58,7 @@ def model():
         filenames = os.listdir("D:/CODE/raw-img/" + folder)
         count = 0
         for file in filenames:
-            if count < 1400:
+            if count > 200:
                 x_train.append("D:/CODE/raw-img/" + folder + "/" + file)
                 x_test.append(translate[folder])
             else:
@@ -165,8 +171,8 @@ for i in range(len(images)):
 from sklearn.metrics import plot_confusion_matrix
 import seaborn as sns
 
-num_of_train_samples = 9800
-num_of_test_samples = 4200
+num_of_train_samples = 21103 #9800
+num_of_test_samples = 9045 #4200
 batch_size = 32 #flow_from_dataframe預設batch_size為32  參考:https://gist.github.com/RyanAkilos/3808c17f79e77c4117de35aa68447045
 
 Y_pred = model.predict_generator(test_flow,num_of_test_samples // batch_size+1)
@@ -175,7 +181,8 @@ print('Confusion Matrix')
 #print(confusion_matrix(test_flow.classes, y_pred))
 cnf_matrix = confusion_matrix(test_flow.classes, y_pred)
 #print('Classification Report')
-target_names = ["Dog", "Horse", "Elephant", "Butterfly", "Chicken", "Cat", "Cow", "Sheep", "Squirrel", "Spider"]
+#target_names = ["Dog", "Horse", "Elephant", "Butterfly", "Chicken", "Cat", "Cow", "Sheep", "Squirrel", "Spider"]
+target_names = ["Dog", "Horse", "Elephant", "Butterfly", "Chicken", "Cat", "Cow", "Sheep", "Squirrel", "Spider", "buffalo", "rhino", "zebra", "Deer", "Eagle", "Fox", "Frog", "Giraffe", "Jellyfish", "Lion", "Lizard", "Monkey", "Owl", "Parrot", "Penguin", "Polar bear", "Rabbit", "Sea lion", "Sea turtle", "Shark", "Tiger", "Whale"]
 print(classification_report(test_flow.classes, y_pred, target_names=target_names))
 
 plt.figure()
