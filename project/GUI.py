@@ -13,7 +13,8 @@ sys.path.append('D:/CODE/python/project/load_model_test.py')
 
 window = tk.Tk()
 window.title('GUI')
-window['bg'] = 'black'
+# window.geometry('600x500')
+#window['bg'] = 'black'
 align_mode = 'nsew'
 pad = 5
 
@@ -55,9 +56,9 @@ def layout(obj, cols=1, rows=1):
 
 div_size = 200
 img_size = div_size * 2
-div1 = tk.Frame(window, width=img_size, height=img_size, bg='blue')
-div2 = tk.Frame(window, width=div_size, height=div_size, bg='green')
-div3 = tk.Frame(window, width=div_size, height=div_size, bg='orange')
+div1 = tk.Frame(window, width=img_size, height=img_size, bg='#C9D1D9')
+div2 = tk.Frame(window, width=div_size, height=div_size, bg='#1B98E0')
+div3 = tk.Frame(window, width=div_size, height=div_size, bg='#08415C')
 #div4 = tk.Frame(window, width=div_size, height=div_size, bg='red')
 
 window.update()
@@ -84,23 +85,23 @@ load_model_test.model()
 
 count = 0
 
-lbl_question = tk.Label(div3, text='Question:', bg='orange',
+lbl_question = tk.Label(div3, text='Question:', bg='#08415C',
                         fg='white', font=('microsoft yahei', 15))
 lbl_question.grid(column=0, row=0, sticky=align_mode)
 
-lbl_question_text = tk.Label(div3, text='test123', bg='orange',
+lbl_question_text = tk.Label(div3, text='test123', bg='#08415C',
                              fg='white', font=('microsoft yahei', 15))
 lbl_question_text.grid(column=1, row=0, sticky=align_mode)
 
-lbl_title1 = tk.Label(div3, text='Please Input Answer!', bg='orange',
+lbl_title1 = tk.Label(div3, text='Please Input Answer!', bg='#08415C',
                       fg='white', font=('microsoft yahei', 15))
 lbl_title1.grid(column=1, row=2, sticky=align_mode)
 
-lbl_count = tk.Label(div3, text=count, bg='orange',
+lbl_count = tk.Label(div3, text=count, bg='#08415C',
                      fg='white', font=('microsoft yahei', 20))
 lbl_count.grid(column=0, row=2, sticky=align_mode)
 
-mylabel = tk.Label(div3, text='Answer:', bg='orange',
+mylabel = tk.Label(div3, text='Answer:', bg='#08415C',
                    fg='white', font=('microsoft yahei', 15))
 mylabel.grid(column=0, row=1, sticky=align_mode)
 
@@ -191,13 +192,13 @@ def restart():
 
 
 #bt1 = tk.Button(div2, text='選擇圖片', bg='green', fg='white')
-bt1 = tk.Button(div2, text='change photo', bg='green',
+bt1 = tk.Button(div2, text='change photo', bg='#1B98E0',
                 fg='white', font=('microsoft yahei', 15))
-bt2 = tk.Button(div2, text='submit', bg='green',
+bt2 = tk.Button(div2, text='submit', bg='#1B98E0',
                 fg='white', font=('microsoft yahei', 15))
-bt3 = tk.Button(div2, text='restart', bg='green',
+bt3 = tk.Button(div2, text='restart', bg='#1B98E0',
                 fg='white', font=('microsoft yahei', 15))
-bt4 = tk.Button(div2, text='show answer', bg='green',
+bt4 = tk.Button(div2, text='show answer', bg='#1B98E0',
                 fg='white', font=('microsoft yahei', 15))
 
 bt1.grid(column=0, row=0, sticky=align_mode)
