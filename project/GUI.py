@@ -92,7 +92,7 @@ lbl_question_text = tk.Label(div3, text='test123', bg='orange',
                              fg='white', font=('microsoft yahei', 15))
 lbl_question_text.grid(column=1, row=0, sticky=align_mode)
 
-lbl_title1 = tk.Label(div3, text='text', bg='orange',
+lbl_title1 = tk.Label(div3, text='Please Input Answer!', bg='orange',
                       fg='white', font=('microsoft yahei', 15))
 lbl_title1.grid(column=1, row=2, sticky=align_mode)
 
@@ -150,11 +150,11 @@ def callback():
 
 def btn_show_pre():
     global count
+
     if myentry.get() != '':
         f = open('D:/CODE/python/log.txt', 'r')
         pre_sol = f.read()
         pre_sol = pre_sol.lower()
-
         myentry_ans = myentry.get()
         myentry_ans = myentry_ans.lower()
 
@@ -165,11 +165,23 @@ def btn_show_pre():
             count = count + 1
             lbl_count.config(text=count)
         else:
-            lbl_title1.config(text='Error! answer is {}'.format(pre_sol))
+            lbl_title1.config(text='Error!')
+            if count == 0:
+                lbl_count.config(text=count)
+            else:
+                count = count - 1
+                lbl_count.config(text=count)
+
     '''f = open('D:/CODE/python/log.txt', 'r')
     pre_sol = f.read()
     lbl_title1.config(text=pre_sol)
     # return f.read()'''
+
+
+def show_ans():
+    f = open('D:/CODE/python/log.txt', 'r')
+    pre_sol = f.read()
+    lbl_title1.config(text='answer is {}'.format(pre_sol))
 
 
 def restart():
@@ -185,16 +197,18 @@ bt2 = tk.Button(div2, text='submit', bg='green',
                 fg='white', font=('microsoft yahei', 15))
 bt3 = tk.Button(div2, text='restart', bg='green',
                 fg='white', font=('microsoft yahei', 15))
-#bt3 = tk.Button(div3, text='restart', command=button_event)
-#bt3.configure(font=('microsoft yahei', 10))
+bt4 = tk.Button(div2, text='show answer', bg='green',
+                fg='white', font=('microsoft yahei', 15))
 
 bt1.grid(column=0, row=0, sticky=align_mode)
 bt2.grid(column=1, row=0, sticky=align_mode)
 bt3.grid(column=2, row=0, sticky=align_mode)
+bt4.grid(column=3, row=0, sticky=align_mode)
 
 bt1['command'] = callback
 bt2['command'] = btn_show_pre
 bt3['command'] = restart
+bt4['command'] = show_ans
 
 layout(window, cols=2, rows=2)
 layout(div1)
