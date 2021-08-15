@@ -211,8 +211,8 @@ bt2['command'] = btn_show_pre
 bt3['command'] = restart
 bt4['command'] = show_ans
 
-layout(window, cols=2, rows=2)
-layout(div1)
+#layout(window, cols=2, rows=2)
+#layout(div1)
 layout(window, cols=2, rows=2)
 layout([div1, div2, div3])
 
