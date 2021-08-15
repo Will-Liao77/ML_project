@@ -50,19 +50,21 @@ def model():
 
     # In[6]:
 
-    foldernames = os.listdir("D:/CODE/raw-img")
+    foldernames = os.listdir("D:/CODE/school_project/raw-img/")
 
     x_train, y_train, x_test, y_test = [], [], [], []
 
     for i, folder in enumerate(foldernames):
-        filenames = os.listdir("D:/CODE/raw-img/" + folder)
+        filenames = os.listdir("D:/CODE/school_project/raw-img/" + folder)
         count = 0
         for file in filenames:
             if count > 200:
-                x_train.append("D:/CODE/raw-img/" + folder + "/" + file)
+                x_train.append(
+                    "D:/CODE/school_project/raw-img/" + folder + "/" + file)
                 x_test.append(translate[folder])
             else:
-                y_train.append("D:/CODE/raw-img/" + folder + "/" + file)
+                y_train.append(
+                    "D:/CODE/school_project/raw-img/" + folder + "/" + file)
                 y_test.append(translate[folder])
             count += 1
     df_x = pd.DataFrame({'Filepath': x_train, 'Target': x_test})
@@ -101,7 +103,7 @@ def model():
 
     # In[21]:
 
-    f = open('D:\CODE\python\path.txt', 'r')
+    f = open('D:/CODE/python/project/path.txt', 'r')
     get_path = f.read()
 
     images = []
@@ -135,11 +137,40 @@ def model():
 
     def show():
         sol = out[0]  # 'prediction: ' +
-        f = open('log.txt', 'w+')
+        f = open('D:/CODE/python/project/log.txt', 'w+')
         f.write(sol)
         print(sol)
 
     show()
+
+
+def confusion_matrix():
+    from sklearn.metrics import classification_report, confusion_matrix
+    from sklearn.metrics import plot_confusion_matrix
+    import seaborn as sns
+
+    num_of_train_samples = 21103  # 9800
+    num_of_test_samples = 9045  # 4200
+    batch_size = 32  # flow_from_dataframe預設batch_size為32  參考:https://gist.github.com/RyanAkilos/3808c17f79e77c4117de35aa68447045
+
+    Y_pred = model.predict_generator(
+        test_flow, num_of_test_samples // batch_size+1)
+    y_pred = np.argmax(Y_pred, axis=1)
+    print('Confusion Matrix')
+    #print(confusion_matrix(test_flow.classes, y_pred))
+    cnf_matrix = confusion_matrix(test_flow.classes, y_pred)
+    #print('Classification Report')
+    #target_names = ["Dog", "Horse", "Elephant", "Butterfly", "Chicken", "Cat", "Cow", "Sheep", "Squirrel", "Spider"]
+    target_names = ["Dog", "Horse", "Elephant", "Butterfly", "Chicken", "Cat", "Cow", "Sheep", "Squirrel", "Spider", "buffalo", "rhino", "zebra", "Deer", "Eagle", "Fox",
+                    "Frog", "Giraffe", "Jellyfish", "Lion", "Lizard", "Monkey", "Owl", "Parrot", "Penguin", "Polar bear", "Rabbit", "Sea lion", "Sea turtle", "Shark", "Tiger", "Whale"]
+    print(classification_report(test_flow.classes,
+                                y_pred, target_names=target_names))
+
+    plt.figure()
+    #plot_confusion_matrix(cnf_matrix, labels=target_names,normalize=True)
+    #plot_confusion_matrix(X = test_flow.classes, y_true = y_pred,labels= target_names, normalize=False)
+    # 參考:https://stackoverflow.com/questions/60776749/plot-confusion-matrix-without-estimator
+    f = sns.heatmap(cnf_matrix, annot=True)
 
 
 model()
@@ -162,34 +193,6 @@ for i in range(len(images)):
     axes[i//cols, i%cols].axis('off')
     axes[i//cols, i%cols].imshow(images[i])
 #fig.savefig('New_Images_Prediction.eps', format='eps')        """
-
-
-# In[11]:
-
-
-"""from sklearn.metrics import classification_report, confusion_matrix
-from sklearn.metrics import plot_confusion_matrix
-import seaborn as sns
-
-num_of_train_samples = 21103 #9800
-num_of_test_samples = 9045 #4200
-batch_size = 32 #flow_from_dataframe預設batch_size為32  參考:https://gist.github.com/RyanAkilos/3808c17f79e77c4117de35aa68447045
-
-Y_pred = model.predict_generator(test_flow,num_of_test_samples // batch_size+1)
-y_pred = np.argmax(Y_pred, axis=1)
-print('Confusion Matrix')
-#print(confusion_matrix(test_flow.classes, y_pred))
-cnf_matrix = confusion_matrix(test_flow.classes, y_pred)
-#print('Classification Report')
-#target_names = ["Dog", "Horse", "Elephant", "Butterfly", "Chicken", "Cat", "Cow", "Sheep", "Squirrel", "Spider"]
-target_names = ["Dog", "Horse", "Elephant", "Butterfly", "Chicken", "Cat", "Cow", "Sheep", "Squirrel", "Spider", "buffalo", "rhino", "zebra", "Deer", "Eagle", "Fox", "Frog", "Giraffe", "Jellyfish", "Lion", "Lizard", "Monkey", "Owl", "Parrot", "Penguin", "Polar bear", "Rabbit", "Sea lion", "Sea turtle", "Shark", "Tiger", "Whale"]
-print(classification_report(test_flow.classes, y_pred, target_names=target_names))
-
-plt.figure()
-#plot_confusion_matrix(cnf_matrix, labels=target_names,normalize=True)
-#plot_confusion_matrix(X = test_flow.classes, y_true = y_pred,labels= target_names, normalize=False)
-f = sns.heatmap(cnf_matrix, annot=True) #參考:https://stackoverflow.com/questions/60776749/plot-confusion-matrix-without-estimator
-"""
 
 
 # In[20]:

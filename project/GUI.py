@@ -25,7 +25,7 @@ def load_pic():
     pic_path = str(pic_path)
     pic_path = pic_path.strip('(').strip(')').strip(',').strip("'")
     # print(pic_path)
-    f = open('path.txt', 'w+')
+    f = open('D:/CODE/python/project/path.txt', 'w+')
     f.write(pic_path)
     # return pic_path
 
@@ -71,7 +71,7 @@ div2.grid(column=1, row=0, padx=pad, pady=pad, sticky=align_mode)
 div3.grid(column=1, row=1, padx=pad, pady=pad, sticky=align_mode)
 
 load_pic()
-f = open('D:/CODE/python/path.txt', 'r')
+f = open('D:/CODE/python/project/path.txt', 'r')
 get_path = f.read()
 im = Image.open(get_path)
 imTK = ImageTk.PhotoImage(im, im.resize((img_size, img_size)))
@@ -110,7 +110,7 @@ myentry.grid(column=1, row=1, padx=5, pady=10, ipady=3, sticky=align_mode)
 
 
 def change_question():
-    f = open('D:/CODE/python/log.txt', 'r')
+    f = open('D:/CODE/python/project/log.txt', 'r')
     pre_sol = f.read()
     lst = []
     pre_hidden = 1
@@ -127,7 +127,7 @@ def change_question():
         hidden = random.randint(pre_hidden + 1, len(lst)-1)
         lst.remove(lst[hidden])
         lst.remove(lst[pre_hidden])
-        lst.insert(hidden, "_")
+        lst.insert(hidden-1, "_")
         lst.insert(pre_hidden, "_")
         Lis_to_Str = "".join(lst)
         lst.clear()
@@ -139,7 +139,7 @@ change_question()
 
 def callback():
     load_pic()
-    f = open('D:/CODE/python/path.txt', 'r')
+    f = open('D:/CODE/python/project/path.txt', 'r')
     get_path = f.read()
     img2 = ImageTk.PhotoImage(Image.open(get_path))
     image_main.configure(image=img2)
@@ -153,7 +153,7 @@ def btn_show_pre():
     global count
 
     if myentry.get() != '':
-        f = open('D:/CODE/python/log.txt', 'r')
+        f = open('D:/CODE/python/project/log.txt', 'r')
         pre_sol = f.read()
         pre_sol = pre_sol.lower()
         myentry_ans = myentry.get()
@@ -180,7 +180,7 @@ def btn_show_pre():
 
 
 def show_ans():
-    f = open('D:/CODE/python/log.txt', 'r')
+    f = open('D:/CODE/python/project/log.txt', 'r')
     pre_sol = f.read()
     lbl_title1.config(text='answer is {}'.format(pre_sol))
 
@@ -212,7 +212,7 @@ bt3['command'] = restart
 bt4['command'] = show_ans
 
 #layout(window, cols=2, rows=2)
-#layout(div1)
+# layout(div1)
 layout(window, cols=2, rows=2)
 layout([div1, div2, div3])
 
