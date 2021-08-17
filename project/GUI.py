@@ -117,7 +117,7 @@ def change_question():
     for i in pre_sol:
         lst.append(i)
     if len(lst) <= 3:
-        hidden = random.randint(1, len(lst))
+        hidden = random.randint(1, len(lst)-1)
         lst.remove(lst[hidden])
         lst.insert(hidden, "_")
         Lis_to_Str = "".join(lst)

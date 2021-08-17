@@ -29,8 +29,14 @@ def model():
     import sys
     sys.path.append('D:/CODE/python/project/GUI.py')
 
+    ####OLD###
     #model = load_model('D:/keras_envirment/animal_init_graph_model_success.h5')
-    model = load_model('D:/keras_envirment/cls33ac8629v2.h5')
+    #model = load_model('D:/keras_envirment/cls33ac8629v2.h5')
+    ####
+    ####NEW####
+    #model = load_model('D:/keras_envirment/vgg16cls32ac8343.h5')
+    model = load_model('D:/keras_envirment/resnet50cls32ac8342.h5')
+    ####
     # In[2]:
 
     # model.summary()
