@@ -35,7 +35,7 @@ def model():
     ####
     ####NEW####
     #model = load_model('D:/keras_envirment/vgg16cls32ac8343.h5')
-    model = load_model('D:/keras_envirment/resnet50cls32ac8342.h5')
+    model = load_model('D:/keras_envirment/resnet50cls32ac9478.h5')
     ####
     # In[2]:
 
@@ -75,7 +75,7 @@ def model():
             count += 1
     df_x = pd.DataFrame({'Filepath': x_train, 'Target': x_test})
     df_y = pd.DataFrame({'Filepath': y_train, 'Target': y_test})
-    train, test = train_test_split(df_x, test_size=0.3, random_state=0)
+    train, test = train_test_split(df_x, test_size=0.27, random_state=0)
 
     # In[7]:
 
@@ -95,14 +95,14 @@ def model():
     train_flow = datagen.flow_from_dataframe(train,
                                              x_col='Filepath',
                                              y_col='Target',
-                                             target_size=(100, 100),
+                                             target_size=(224, 224),
                                              interpolation='lanczos',
                                              shuffle=False,  # 繪製confusion_matrix時,需將shuffle關閉
                                              validate_filenames=False)
     test_flow = datagen_test.flow_from_dataframe(test,
                                                  x_col='Filepath',
                                                  y_col='Target',
-                                                 target_size=(100, 100),
+                                                 target_size=(224, 224),
                                                  interpolation='lanczos',
                                                  shuffle=False,  # 繪製confusion_matrix時,需將shuffle關閉
                                                  validate_filenames=False)
@@ -120,7 +120,7 @@ def model():
                                     interpolation="lanczos")) / 255.0'''
     temp = np.array(image.load_img(get_path,
                                    color_mode="rgb",
-                                   target_size=(100, 100),
+                                   target_size=(224, 224),
                                    interpolation="lanczos")) / 255.0
     images.append(temp)
     images = np.array(images)
@@ -155,8 +155,8 @@ def confusion_matrix():
     from sklearn.metrics import plot_confusion_matrix
     import seaborn as sns
 
-    num_of_train_samples = 21103  # 9800
-    num_of_test_samples = 9045  # 4200
+    num_of_train_samples = 18692  # 9800
+    num_of_test_samples = 6914  # 4200
     batch_size = 32  # flow_from_dataframe預設batch_size為32  參考:https://gist.github.com/RyanAkilos/3808c17f79e77c4117de35aa68447045
 
     Y_pred = model.predict_generator(
