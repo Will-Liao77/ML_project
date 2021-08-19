@@ -8,8 +8,9 @@ import io
 import load_model_test
 import string
 import sys
-sys.path.append('D:/CODE/python/project/load_model_test.py')
 
+
+# sys.path.append('D:/CODE/python/project/load_model_test.py')
 
 window = tk.Tk()
 window.title('GUI')
@@ -28,7 +29,6 @@ def load_pic():
     f = open('D:/CODE/python/project/path.txt', 'w+')
     f.write(pic_path)
     # return pic_path
-
 
 # def button_event():
     # if myentry.get() != '':
@@ -65,7 +65,8 @@ window.update()
 win_size = min(window.winfo_width(), window.winfo_height())
 # print(win_size)
 
-div1.grid(column=0, row=0, padx=pad, pady=pad, rowspan=2, sticky=align_mode)
+div1.grid(column=0, row=0, padx=pad, pady=pad,
+          rowspan=2, sticky=align_mode)
 #div4.grid(column=0, row=1, padx=pad, pady=pad, sticky=align_mode)
 div2.grid(column=1, row=0, padx=pad, pady=pad, sticky=align_mode)
 div3.grid(column=1, row=1, padx=pad, pady=pad, sticky=align_mode)
@@ -81,6 +82,7 @@ image_main['height'] = img_size
 image_main['width'] = img_size
 image_main.grid(column=0, row=0, sticky=align_mode)
 image_main.pack(side="bottom", fill="both", expand="yes")
+
 load_model_test.model()
 
 count = 0
@@ -147,6 +149,7 @@ def callback():
     load_model_test.model()
     change_question()
     myentry.delete('0', 'end')
+    lbl_title1.config(text="changed")
 
 
 def btn_show_pre():

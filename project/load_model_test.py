@@ -27,7 +27,7 @@ def model():
     import keras
     import io
     import sys
-    sys.path.append('D:/CODE/python/project/GUI.py')
+    # sys.path.append('D:/CODE/python/project/GUI.py')
 
     ####OLD###
     #model = load_model('D:/keras_envirment/animal_init_graph_model_success.h5')
@@ -56,23 +56,25 @@ def model():
 
     # In[6]:
 
-    foldernames = os.listdir("D:/CODE/school_project/raw-img/")
+    from keras.preprocessing import image
+    foldernames = os.listdir("D:/CODE/python/project/raw-img/")
 
+    data_x, data_y = [], []
     x_train, y_train, x_test, y_test = [], [], [], []
 
     for i, folder in enumerate(foldernames):
-        filenames = os.listdir("D:/CODE/school_project/raw-img/" + folder)
-        count = 0
+        filenames = os.listdir("D:/CODE/python/project/raw-img/" + folder)
         for file in filenames:
-            if count > 200:
-                x_train.append(
-                    "D:/CODE/school_project/raw-img/" + folder + "/" + file)
-                x_test.append(translate[folder])
-            else:
-                y_train.append(
-                    "D:/CODE/school_project/raw-img/" + folder + "/" + file)
-                y_test.append(translate[folder])
-            count += 1
+            #print("D:/CODE/school_project/raw-img/" + folder + "/" + file)
+            #img = image.load_img("D:/CODE/school_project/raw-img/{}/{}".format(folder,file))
+            # print(type(img))
+
+            data_x.append("D:/CODE/python/project/raw-img/" +
+                          folder + "/" + file)
+            data_y.append(translate[folder])
+
+    x_train, y_train, x_test, y_test = train_test_split(
+        data_x, data_y, test_size=0.3, random_state=0)
     df_x = pd.DataFrame({'Filepath': x_train, 'Target': x_test})
     df_y = pd.DataFrame({'Filepath': y_train, 'Target': y_test})
     train, test = train_test_split(df_x, test_size=0.27, random_state=0)
@@ -180,6 +182,7 @@ def confusion_matrix():
 
 
 model()
+
 
 '''plt.title(sol)
 plt.axis('off')
