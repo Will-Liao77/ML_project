@@ -112,14 +112,16 @@ def model():
     # In[29]:
 
     predictions = model.predict(images)
+    # print(predictions)
     pred_ints = predictions.argmax(axis=1)
     out = []
+    # print(pred_ints)
     for x in pred_ints:
         labels = train_flow.class_indices
         # print(x)
         # print(labels)
         for label, val in labels.items():
-            # print(label,val)
+            #print(label, val)
             if val == x:
                 out.append(label)
 
