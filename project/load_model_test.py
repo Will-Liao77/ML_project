@@ -28,13 +28,6 @@ def model():
     import io
     import sys
     # sys.path.append('D:/CODE/python/project/GUI.py')
-
-    ####OLD###
-    #model = load_model('D:/keras_envirment/animal_init_graph_model_success.h5')
-    #model = load_model('D:/keras_envirment/cls33ac8629v2.h5')
-    ####
-    ####NEW####
-    #model = load_model('D:/keras_envirment/vgg16cls32ac8343.h5')
     model = load_model('D:/keras_envirment/resnet50cls32ac9478.h5')
     ####
     # In[2]:
@@ -44,9 +37,6 @@ def model():
     # In[3]:
 
     # In[4]:
-
-    '''translate = {"cane": "Dog", "cavallo": "Horse", "elefante": "Elephant", "farfalla": "Butterfly", "gallina": "Chicken",
-                 "gatto": "Cat", "mucca": "Cow", "pecora": "Sheep", "scoiattolo": "Squirrel", "ragno": "Spider"}'''
 
     translate = {"cane": "Dog", "cavallo": "Horse", "elefante": "Elephant", "farfalla": "Butterfly", "gallina": "Chicken",
                  "gatto": "Cat", "mucca": "Cow", "pecora": "Sheep", "scoiattolo": "Squirrel", "ragno": "Spider", "buffalo": "buffalo",
@@ -65,9 +55,6 @@ def model():
     for i, folder in enumerate(foldernames):
         filenames = os.listdir("D:/CODE/python/project/raw-img/" + folder)
         for file in filenames:
-            #print("D:/CODE/school_project/raw-img/" + folder + "/" + file)
-            #img = image.load_img("D:/CODE/school_project/raw-img/{}/{}".format(folder,file))
-            # print(type(img))
 
             data_x.append("D:/CODE/python/project/raw-img/" +
                           folder + "/" + file)
@@ -115,11 +102,6 @@ def model():
     get_path = f.read()
 
     images = []
-    '''for i, labelname in enumerate(os.listdir("D:/CODE/pre_img")):
-        temp = np.array(image.load_img('D:/CODE/pre_img/' + labelname,
-                                    color_mode="rgb",
-                                    target_size=(100, 100),
-                                    interpolation="lanczos")) / 255.0'''
     temp = np.array(image.load_img(get_path,
                                    color_mode="rgb",
                                    target_size=(224, 224),
@@ -130,7 +112,7 @@ def model():
     # In[29]:
 
     predictions = model.predict(images)
-    pred_ints = predictions.argmax(axis=-1)
+    pred_ints = predictions.argmax(axis=1)
     out = []
     for x in pred_ints:
         labels = train_flow.class_indices
@@ -168,7 +150,6 @@ def confusion_matrix():
     #print(confusion_matrix(test_flow.classes, y_pred))
     cnf_matrix = confusion_matrix(test_flow.classes, y_pred)
     #print('Classification Report')
-    #target_names = ["Dog", "Horse", "Elephant", "Butterfly", "Chicken", "Cat", "Cow", "Sheep", "Squirrel", "Spider"]
     target_names = ["Dog", "Horse", "Elephant", "Butterfly", "Chicken", "Cat", "Cow", "Sheep", "Squirrel", "Spider", "buffalo", "rhino", "zebra", "Deer", "Eagle", "Fox",
                     "Frog", "Giraffe", "Jellyfish", "Lion", "Lizard", "Monkey", "Owl", "Parrot", "Penguin", "Polar bear", "Rabbit", "Sea lion", "Sea turtle", "Shark", "Tiger", "Whale"]
     print(classification_report(test_flow.classes,
@@ -190,18 +171,6 @@ plt.imshow(images[0])'''
 
 
 # In[77]:
-
-
-"""
-rows,cols = ((len(images) ) // 5 ) ,5  #至少10張 ((len(images) -1 ) // 5 ) +1
-temp_axis = (rows * 5)
-fig, axes = plt.subplots(nrows=rows, ncols=cols, figsize=(20,temp_axis))
-for i in range(len(images)):
-    temp = 'Prediction: ' + out[i]
-    axes[i//cols, i%cols].set_title(temp)
-    axes[i//cols, i%cols].axis('off')
-    axes[i//cols, i%cols].imshow(images[i])
-#fig.savefig('New_Images_Prediction.eps', format='eps')        """
 
 
 # In[20]:
