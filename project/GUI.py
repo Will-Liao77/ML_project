@@ -30,14 +30,6 @@ def load_pic():
     f.write(pic_path)
     # return pic_path
 
-# def button_event():
-    # if myentry.get() != '':
-    #bt3['text'] = myentry.get()
-    # print(myentry.get())
-    #    f = open('D:/CODE/python/log.txt', 'r')
-    #   if myentry.get() == f.read():
-
-
 def layout(obj, cols=1, rows=1):
     def method(trg, col, row):
 
@@ -59,7 +51,6 @@ img_size = div_size * 2
 div1 = tk.Frame(window, width=img_size, height=img_size, bg='#C9D1D9')
 div2 = tk.Frame(window, width=div_size, height=div_size, bg='#1B98E0')
 div3 = tk.Frame(window, width=div_size, height=div_size, bg='#08415C')
-#div4 = tk.Frame(window, width=div_size, height=div_size, bg='red')
 
 window.update()
 win_size = min(window.winfo_width(), window.winfo_height())
@@ -194,7 +185,6 @@ def restart():
     lbl_count.config(text=count)
 
 
-#bt1 = tk.Button(div2, text='選擇圖片', bg='green', fg='white')
 bt1 = tk.Button(div2, text='change photo', bg='#1B98E0',
                 fg='white', font=('microsoft yahei', 15))
 bt2 = tk.Button(div2, text='submit', bg='#1B98E0',
@@ -214,8 +204,6 @@ bt2['command'] = btn_show_pre
 bt3['command'] = restart
 bt4['command'] = show_ans
 
-#layout(window, cols=2, rows=2)
-# layout(div1)
 layout(window, cols=2, rows=2)
 layout([div1, div2, div3])
 
