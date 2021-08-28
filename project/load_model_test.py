@@ -29,7 +29,6 @@ def model():
     import sys
     # sys.path.append('D:/CODE/python/project/GUI.py')
     model = load_model('D:/keras_envirment/resnet50cls32ac9478.h5')
-    ####
     # In[2]:
 
     # model.summary()
