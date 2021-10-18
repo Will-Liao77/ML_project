@@ -8,16 +8,33 @@ import io
 import load_model_test
 import string
 import sys
+import tempfile
+from pygame import mixer
+from gtts import gTTS
 
-
+dot = 1
 # sys.path.append('D:/CODE/python/project/load_model_test.py')
 
 window = tk.Tk()
-window.title('GUI')
+window.title('被動式英文學習平台')
 # window.geometry('600x500')
-#window['bg'] = 'black'
+# window['bg'] = 'black'
 align_mode = 'nsew'
 pad = 5
+
+
+def speak(sentence, lang):
+    with tempfile.NamedTemporaryFile(delete=True) as fp:
+        tts = gTTS(text=sentence, lang=lang)
+        tts.save('{}.mp3'.format(fp.name))
+        mixer.init()
+        mixer.music.load('{}.mp3'.format(fp.name))
+        mixer.music.play(1)
+
+
+if dot == 1:
+    speak('Welcome to learning english system', 'en')
+    dot = -1
 
 
 def load_pic():
@@ -26,9 +43,17 @@ def load_pic():
     pic_path = str(pic_path)
     pic_path = pic_path.strip('(').strip(')').strip(',').strip("'")
     # print(pic_path)
-    f = open('D:/CODE/python/project/path.txt', 'w+')
+    f = open('./path.txt', 'w+')
     f.write(pic_path)
     # return pic_path
+
+# def button_event():
+    # if myentry.get() != '':
+    # bt3['text'] = myentry.get()
+    # print(myentry.get())
+    #    f = open('D:/CODE/python/log.txt', 'r')
+    #   if myentry.get() == f.read():
+
 
 def layout(obj, cols=1, rows=1):
     def method(trg, col, row):
@@ -51,6 +76,7 @@ img_size = div_size * 2
 div1 = tk.Frame(window, width=img_size, height=img_size, bg='#C9D1D9')
 div2 = tk.Frame(window, width=div_size, height=div_size, bg='#1B98E0')
 div3 = tk.Frame(window, width=div_size, height=div_size, bg='#08415C')
+# div4 = tk.Frame(window, width=div_size, height=div_size, bg='red')
 
 window.update()
 win_size = min(window.winfo_width(), window.winfo_height())
@@ -58,12 +84,12 @@ win_size = min(window.winfo_width(), window.winfo_height())
 
 div1.grid(column=0, row=0, padx=pad, pady=pad,
           rowspan=2, sticky=align_mode)
-#div4.grid(column=0, row=1, padx=pad, pady=pad, sticky=align_mode)
+# div4.grid(column=0, row=1, padx=pad, pady=pad, sticky=align_mode)
 div2.grid(column=1, row=0, padx=pad, pady=pad, sticky=align_mode)
 div3.grid(column=1, row=1, padx=pad, pady=pad, sticky=align_mode)
 
 load_pic()
-f = open('D:/CODE/python/project/path.txt', 'r')
+f = open('./path.txt', 'r')
 get_path = f.read()
 im = Image.open(get_path)
 imTK = ImageTk.PhotoImage(im, im.resize((img_size, img_size)))
@@ -103,7 +129,7 @@ myentry.grid(column=1, row=1, padx=5, pady=10, ipady=3, sticky=align_mode)
 
 
 def change_question():
-    f = open('D:/CODE/python/project/log.txt', 'r')
+    f = open('./log.txt', 'r')
     pre_sol = f.read()
     lst = []
     pre_hidden = 1
@@ -132,7 +158,7 @@ change_question()
 
 def callback():
     load_pic()
-    f = open('D:/CODE/python/project/path.txt', 'r')
+    f = open('./path.txt', 'r')
     get_path = f.read()
     img2 = ImageTk.PhotoImage(Image.open(get_path))
     image_main.configure(image=img2)
@@ -147,7 +173,7 @@ def btn_show_pre():
     global count
 
     if myentry.get() != '':
-        f = open('D:/CODE/python/project/log.txt', 'r')
+        f = open('./log.txt', 'r')
         pre_sol = f.read()
         pre_sol = pre_sol.lower()
         myentry_ans = myentry.get()
@@ -174,17 +200,21 @@ def btn_show_pre():
 
 
 def show_ans():
-    f = open('D:/CODE/python/project/log.txt', 'r')
+    f = open('./log.txt', 'r')
     pre_sol = f.read()
     lbl_title1.config(text='answer is {}'.format(pre_sol))
+    speak(pre_sol, 'en')
 
 
 def restart():
     global count
     count = 0
     lbl_count.config(text=count)
+    lbl_title1.config(text="restart")
+    myentry.delete('0', 'end')
 
 
+# bt1 = tk.Button(div2, text='選擇圖片', bg='green', fg='white')
 bt1 = tk.Button(div2, text='change photo', bg='#1B98E0',
                 fg='white', font=('microsoft yahei', 15))
 bt2 = tk.Button(div2, text='submit', bg='#1B98E0',
@@ -204,6 +234,8 @@ bt2['command'] = btn_show_pre
 bt3['command'] = restart
 bt4['command'] = show_ans
 
+# layout(window, cols=2, rows=2)
+# layout(div1)
 layout(window, cols=2, rows=2)
 layout([div1, div2, div3])
 

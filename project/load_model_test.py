@@ -28,7 +28,8 @@ def model():
     import io
     import sys
     # sys.path.append('D:/CODE/python/project/GUI.py')
-    model = load_model('D:/keras_envirment/resnet50cls32ac9478.h5')
+    model = load_model('./resnet50cls32ac9478.h5')
+    ####
     # In[2]:
 
     # model.summary()
@@ -46,16 +47,16 @@ def model():
     # In[6]:
 
     from keras.preprocessing import image
-    foldernames = os.listdir("D:/CODE/python/project/raw-img/")
+    foldernames = os.listdir("./raw-img/")
 
     data_x, data_y = [], []
     x_train, y_train, x_test, y_test = [], [], [], []
 
     for i, folder in enumerate(foldernames):
-        filenames = os.listdir("D:/CODE/python/project/raw-img/" + folder)
+        filenames = os.listdir("./raw-img/" + folder)
         for file in filenames:
 
-            data_x.append("D:/CODE/python/project/raw-img/" +
+            data_x.append("./raw-img/" +
                           folder + "/" + file)
             data_y.append(translate[folder])
 
@@ -97,7 +98,7 @@ def model():
 
     # In[21]:
 
-    f = open('D:/CODE/python/project/path.txt', 'r')
+    f = open('./path.txt', 'r')
     get_path = f.read()
 
     images = []
@@ -128,7 +129,7 @@ def model():
 
     def show():
         sol = out[0]  # 'prediction: ' +
-        f = open('D:/CODE/python/project/log.txt', 'w+')
+        f = open('./log.txt', 'w+')
         f.write(sol)
         print(sol)
 
